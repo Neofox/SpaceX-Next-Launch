@@ -9,9 +9,6 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FlightIcon from "@material-ui/icons/Flight";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -67,7 +64,7 @@ const NextLaunch = (props: {}) => {
   const classes = useStyles(props);
   const [expanded, setExpanded] = React.useState(true);
 
-  const { loading, error, data } = useQuery(LAUNCH_NEXT);
+  const { loading, data } = useQuery(LAUNCH_NEXT);
 
   if (loading) return <h4>Loading...</h4>;
 
