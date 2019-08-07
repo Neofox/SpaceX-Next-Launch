@@ -4,7 +4,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
 import Navbar from "./Navbar";
 import Countdown from "./Countdown";
-import CurrentLaunchPanel from "./CurrentLaunchPanel";
+import EventSnackbar from "./EventSnackbar";
+import NextLaunch from "./NextLaunch";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo-hooks";
 
@@ -19,8 +20,9 @@ const App: React.FC = () => {
         <CssBaseline />
         <Navbar />
         <main>
-          <CurrentLaunchPanel />
           <Countdown />
+          <NextLaunch />
+          <EventSnackbar />
         </main>
       </ApolloProvider>
     </ThemeProvider>
