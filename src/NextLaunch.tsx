@@ -112,7 +112,7 @@ const NextLaunch = (props: {}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <label>status:</label>
+        <Typography style={{ marginLeft: 8 }}>status:</Typography>
         <IconButton aria-label="launch status">
           <FlightIcon
             color={

@@ -8,6 +8,7 @@ import EventSnackbar from "./EventSnackbar";
 import NextLaunch from "./NextLaunch";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo-hooks";
+import { Container } from "@material-ui/core";
 
 const client = new ApolloClient({
   uri: "https://api.spacex.land/graphql/"
@@ -18,11 +19,13 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
         <CssBaseline />
-        <Navbar />
         <main>
-          <Countdown />
-          <NextLaunch />
-          <EventSnackbar />
+          <Navbar />
+          <Container>
+            <Countdown />
+            <NextLaunch />
+            <EventSnackbar />
+          </Container>
         </main>
       </ApolloProvider>
     </ThemeProvider>

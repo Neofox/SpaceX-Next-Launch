@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: "wrap"
     },
     countdownItem: {
-      color: "#111",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -44,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
       paddingTop: theme.spacing(2),
       "& span": {
-        color: "#333",
         fontWeight: 600,
         textTransform: "uppercase",
         zIndex: 10
