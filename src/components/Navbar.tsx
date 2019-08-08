@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
             }
             color="inherit"
           >
-            <img style={{ height: 30 }} src={githubLogo} />
+            <img style={{ height: 30 }} src={githubLogo} alt="github logo" />
           </IconButton>
         </Toolbar>
       </AppBar>
