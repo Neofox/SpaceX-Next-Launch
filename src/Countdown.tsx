@@ -6,6 +6,7 @@ import { useQuery } from "react-apollo-hooks";
 import moment from "moment";
 import { useInterval } from "./utils/hooks";
 import Container from "@material-ui/core/Container";
+import { LaunchNextData } from "./utils/types";
 
 interface StateInterface {
   days: { time: number; percent: number };
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Countdown: React.FC = () => {
-  const { loading, error, data } = useQuery(NEXT_LAUNCH_DATE);
+  const { error, data } = useQuery<LaunchNextData>(NEXT_LAUNCH_DATE);
   const classes = useStyles();
   const [state, setState] = useState<StateInterface>({
     days: { time: 0, percent: 0 },
@@ -85,13 +86,13 @@ const Countdown: React.FC = () => {
     });
   }, 1000);
 
-  if (loading) return <h4>Loading...</h4>;
   if (error) {
     console.log(error);
-    return <h4>ERROR</h4>;
   }
 
-  const { launch_date_utc } = data.launchNext;
+  let launch_date_utc = data
+    ? data.launchNext.launch_date_utc
+    : moment().format();
 
   return (
     <div className={classes.root}>

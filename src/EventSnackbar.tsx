@@ -5,6 +5,7 @@ import moment from "moment";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import { useInterval } from "./utils/hooks";
+import { LaunchNextData } from "./utils/types";
 
 const CURRENT_LAUNCH = gql`
   query launchNext {
@@ -27,17 +28,17 @@ const isInProgress = (
   return now.isAfter(launchDate) && upcoming;
 };
 
-const EventSnackbar: React.FC = props => {
-  const { loading, error, data } = useQuery(CURRENT_LAUNCH);
+const EventSnackbar: React.FC = () => {
+  const { loading, error, data } = useQuery<LaunchNextData>(CURRENT_LAUNCH);
   const [open, setOpen] = React.useState(false);
 
-  let launch_date_utc = "";
-  let upcoming = false;
-  let link = { video_link: "" };
-  if (!loading && !error) {
+  let launch_date_utc: string = "";
+  let upcoming: boolean = false;
+  let video_link: string | undefined;
+  if (!loading && !error && data !== undefined) {
     launch_date_utc = data.launchNext.launch_date_utc;
     upcoming = data.launchNext.upcoming;
-    link = data.launchNext.link;
+    video_link = data.launchNext.links.video_link;
   }
 
   useInterval(() => {
@@ -62,7 +63,7 @@ const EventSnackbar: React.FC = props => {
           key="open link"
           color="secondary"
           size="small"
-          onClick={() => window.open(link.video_link, "_blank")}
+          onClick={() => window.open(video_link, "_blank")}
         >
           See here
         </Button>
