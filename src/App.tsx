@@ -4,7 +4,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
 import Navbar from "./components/Navbar";
-import EventSnackbar from "./EventSnackbar";
+import EventSnackbar from "./components/EventSnackbar";
 import Dashboard from "./components/Dashboard";
 import { ApolloProvider } from "react-apollo-hooks";
 

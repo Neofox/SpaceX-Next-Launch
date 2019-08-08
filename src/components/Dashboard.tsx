@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import LaunchCard from "./LaunchCard";
-import Countdown from "../Countdown";
+import Countdown from "./Countdown";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import { LaunchLatestData, LaunchNextData } from "../utils/types";

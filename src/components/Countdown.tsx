@@ -4,9 +4,9 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import moment from "moment";
-import { useInterval } from "./utils/hooks";
+import { useInterval } from "../utils/hooks";
 import Container from "@material-ui/core/Container";
-import { LaunchNextData } from "./utils/types";
+import { LaunchNextData } from "../utils/types";
 
 interface StateInterface {
   days: { time: number; percent: number };
