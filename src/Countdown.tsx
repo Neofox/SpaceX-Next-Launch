@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import moment from "moment";
 import useInterval from "./hooks/useInterval";
+import Container from "@material-ui/core/Container";
 
 interface StateInterface {
   days: { time: number; percent: number };
@@ -26,14 +25,15 @@ const NEXT_LAUNCH_DATE = gql`
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: theme.spacing(4)
-      // padding: theme.spacing(3, 2)
+      padding: theme.spacing(4, 0, 4),
+      background: "#fff"
     },
     countdownWrapper: {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      fontSize: "1.2rem"
     },
     countdownItem: {
       display: "flex",
@@ -69,9 +69,9 @@ const Countdown: React.FC = () => {
   });
 
   useInterval(() => {
-    const then = moment(launch_date_utc);
-    const now = moment();
-    const countdown = moment(then.valueOf() - now.valueOf());
+    const countdown = moment(
+      moment(launch_date_utc).valueOf() - moment().valueOf()
+    );
     const daysInt = parseInt(countdown.format("D"));
     const hoursInt = parseInt(countdown.format("HH"));
     const minutesInt = parseInt(countdown.format("mm"));
@@ -94,9 +94,13 @@ const Countdown: React.FC = () => {
   const { launch_date_utc } = data.launchNext;
 
   return (
-    <Grid container justify="center" alignItems="center" spacing={2}>
-      <Paper className={classes.root}>
-        <Typography component="div" className={classes.countdownWrapper}>
+    <div className={classes.root}>
+      <Container>
+        <Typography
+          align="center"
+          component="div"
+          className={classes.countdownWrapper}
+        >
           <div className={classes.countdownItem}>
             {state.days.time}
             <span>days</span>
@@ -114,8 +118,8 @@ const Countdown: React.FC = () => {
             <span>seconds</span>
           </div>
         </Typography>
-      </Paper>
-    </Grid>
+      </Container>
+    </div>
   );
 };
 

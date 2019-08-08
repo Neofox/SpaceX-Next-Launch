@@ -15,8 +15,8 @@ const Navbar: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Toolbar>
+      <AppBar position="relative" color="primary">
+        <Toolbar variant="regular" component="header">
           <Typography variant="h6" color="inherit">
             SpaceX Next Launch
           </Typography>
