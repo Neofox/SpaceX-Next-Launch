@@ -70,13 +70,15 @@ const Countdown: React.FC = () => {
   });
 
   useInterval(() => {
-    const countdown = moment(
-      moment(launch_date_utc).valueOf() - moment().valueOf()
-    );
-    const daysInt = parseInt(countdown.format("D"));
-    const hoursInt = parseInt(countdown.format("HH"));
-    const minutesInt = parseInt(countdown.format("mm"));
-    const secondsInt = parseInt(countdown.format("ss"));
+    let then = moment(launch_date_utc);
+    const now = moment();
+    const daysInt = then.diff(now, "days");
+    then.subtract(daysInt, "days");
+    const hoursInt = then.diff(now, "hours");
+    then.subtract(hoursInt, "hours");
+    const minutesInt = then.diff(now, "minutes");
+    then.subtract(minutesInt, "minutes");
+    const secondsInt = then.diff(now, "seconds");
 
     setState({
       days: { time: daysInt, percent: daysInt },
@@ -90,18 +92,12 @@ const Countdown: React.FC = () => {
     console.log(error);
   }
 
-  let launch_date_utc = data
-    ? data.launchNext.launch_date_utc
-    : moment().format();
+  let launch_date_utc = data ? data.launchNext.launch_date_utc : moment().format();
 
   return (
     <div className={classes.root}>
       <Container>
-        <Typography
-          align="center"
-          component="div"
-          className={classes.countdownWrapper}
-        >
+        <Typography align="center" component="div" className={classes.countdownWrapper}>
           <div className={classes.countdownItem}>
             {state.days.time}
             <span>days</span>
