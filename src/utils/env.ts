@@ -13,14 +13,13 @@ function getEnvVars(env = "", envVars: any): ENV {
 }
 
 const dev = require("../config/development.env.json");
+const prod = require("../config/production.env.json");
 const env = getEnvVars(process.env.NODE_ENV, {
-  dev
+  dev,
   // staging: {
   //
   // },
-  // prod: {
-  //
-  // }
+  prod
 });
 
 export const NODE_ENV = env.NODE_ENV;
