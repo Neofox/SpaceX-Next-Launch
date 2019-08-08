@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "spacex-next-launch-dev-20190807214310-authRole",
+            "UnauthRoleArn": "arn:aws:iam::066011352742:role/spacex-next-launch-dev-20190807214310-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::066011352742:role/spacex-next-launch-dev-20190807214310-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "spacex-next-launch-dev-20190807214310-deployment",
+            "UnauthRoleName": "spacex-next-launch-dev-20190807214310-unauthRole",
+            "StackName": "spacex-next-launch-dev-20190807214310",
+            "StackId": "arn:aws:cloudformation:eu-west-1:066011352742:stack/spacex-next-launch-dev-20190807214310/966380e0-b94b-11e9-addc-0a692a24f4a4"
+        },
+        "categories": {
+            "auth": {
+                "cognitoc66f440f": {}
+            }
+        }
+    }
+}

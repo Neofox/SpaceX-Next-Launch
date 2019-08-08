@@ -1,0 +1,25 @@
+{
+    "identityPoolName": "spacex_next_launch_identitypool_ad37fb91",
+    "allowUnauthenticatedIdentities": true,
+    "openIdLambdaRoleName": "spacexad37fb91_openid_lambda_role",
+    "authSelections": "identityPoolOnly",
+    "resourceName": "cognitoc66f440f",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "appName": "spacexNextLaunch",
+    "roleName": "pinpointLambdaRole64718858",
+    "cloudWatchPolicyName": "cloudWatchPolicy64718858",
+    "pinpointPolicyName": "pinpointPolicy64718858",
+    "authPolicyName": "pinpoint_amplify_64718858",
+    "unauthPolicyName": "pinpoint_amplify_64718858",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
