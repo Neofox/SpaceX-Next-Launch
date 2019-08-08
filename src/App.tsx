@@ -3,7 +3,7 @@ import { client } from "./utils/apollo";
 import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
-import Navbar from "./Navbar";
+import Navbar from "./components/Navbar";
 import EventSnackbar from "./EventSnackbar";
 import Dashboard from "./components/Dashboard";
 import { ApolloProvider } from "react-apollo-hooks";
