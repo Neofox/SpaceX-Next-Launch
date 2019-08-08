@@ -4,7 +4,7 @@ import { useQuery } from "react-apollo-hooks";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import useInterval from "./hooks/useInterval";
+import { useInterval } from "./utils/hooks";
 
 const CURRENT_LAUNCH = gql`
   query launchNext {
