@@ -9,6 +9,7 @@ export type launchLinksType = {
   flickr_images: [string];
   wikipedia?: string;
   mission_patch_small?: string;
+  reddit_launch?: string;
 };
 
 export type launchSiteType = {

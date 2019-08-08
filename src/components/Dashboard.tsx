@@ -8,6 +8,7 @@ import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import { LaunchLatestData, LaunchNextData } from "../utils/types";
 
+//TODO move graphql request in their own file
 const LAUNCH_NEXT = gql`
   query next {
     launchNext {
@@ -18,6 +19,9 @@ const LAUNCH_NEXT = gql`
       links {
         flickr_images
         mission_patch_small
+        reddit_launch
+        video_link
+        wikipedia
       }
       launch_site {
         site_name_long
@@ -37,6 +41,9 @@ const LAUNCH_LATEST = gql`
       links {
         flickr_images
         mission_patch_small
+        reddit_launch
+        video_link
+        wikipedia
       }
       launch_site {
         site_name_long
