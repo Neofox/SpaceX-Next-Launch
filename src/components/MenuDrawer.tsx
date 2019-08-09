@@ -52,8 +52,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth
     },
     content: {
+      height: "100vh",
+      overflowX: "auto",
       flexGrow: 1,
-      padding: theme.spacing(3)
+      padding: theme.spacing(3, 0, 0, 0)
     }
   })
 );
@@ -85,12 +87,6 @@ const MenuDrawer = (props: { children: ReactNode }) => {
       </List>
       <Divider />
       <List>
-        <ListItem button component={AdapterLink} to="/launches">
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Launches" />
-        </ListItem>
         <ListItem button component={AdapterLink} to="/ships">
           <ListItemIcon>
             <BoatIcon />
@@ -104,7 +100,7 @@ const MenuDrawer = (props: { children: ReactNode }) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="absolute" elevation={10} className={classes.appBar}>
         <Toolbar variant="regular">
           <IconButton
             color="inherit"
