@@ -12,7 +12,6 @@ import { HeadRow, Order, EnhancedTableProps, shipType, ShipsData } from "../util
 import { stableSort, getSorting } from "../utils/table";
 import { QueryHookResult } from "react-apollo-hooks";
 import { OperationVariables } from "apollo-client";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
