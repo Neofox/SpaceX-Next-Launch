@@ -5,25 +5,24 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
 import EventSnackbar from "./components/EventSnackbar";
 import Dashboard from "./components/Dashboard";
+import DataTable from "./components/DataTable";
 import { ApolloProvider } from "react-apollo-hooks";
 import MenuDrawer from "./components/MenuDrawer";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
         <CssBaseline />
-        <main>
-          <Router>
-            <MenuDrawer>
-              <Route exact path="/" render={() => <Dashboard />} />
-              <Route exact path="/launches" render={() => <h1>Launches</h1>} />
-              <Route exact path="/ships" render={() => <h1>Ships</h1>} />
-            </MenuDrawer>
-          </Router>
-          <EventSnackbar />
-        </main>
+        <Router>
+          <MenuDrawer>
+            <Route exact path="/" render={() => <Dashboard />} />
+            <Route exact path="/launches" render={() => <DataTable />} />
+            <Route exact path="/ships" render={() => <DataTable />} />
+          </MenuDrawer>
+        </Router>
+        <EventSnackbar />
       </ApolloProvider>
     </ThemeProvider>
   );

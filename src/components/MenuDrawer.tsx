@@ -105,7 +105,7 @@ const MenuDrawer = (props: { children: ReactNode }) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar variant="regular" component="header">
+        <Toolbar variant="regular">
           <IconButton
             color="inherit"
             aria-label="open drawer"

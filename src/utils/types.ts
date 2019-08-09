@@ -1,3 +1,7 @@
+import { Styles } from "@material-ui/styles/withStyles";
+import { StylesHook } from "@material-ui/styles/makeStyles";
+import { Theme } from "@material-ui/core/styles";
+
 export enum Environments {
   dev = "development",
   stag = "staging",
@@ -37,4 +41,21 @@ export interface LaunchNextData {
 
 export interface LaunchLatestData {
   launchLatest: launchType;
+}
+
+////////// TABLE ///////////
+
+export type Order = "asc" | "desc";
+
+export interface HeadRow {
+  id: string;
+  label: string;
+  numeric: boolean;
+}
+
+export interface EnhancedTableProps {
+  classes: ReturnType<StylesHook<Styles<Theme, {}, string>>>;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
+  order: Order;
+  orderBy: string;
 }
