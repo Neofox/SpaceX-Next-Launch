@@ -8,22 +8,24 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TablePagination from "@material-ui/core/TablePagination";
-import { HeadRow, Order, EnhancedTableProps } from "../utils/types";
+import { HeadRow, Order, EnhancedTableProps, shipType, ShipsData } from "../utils/types";
 import { stableSort, getSorting } from "../utils/table";
+import { QueryHookResult } from "react-apollo-hooks";
+import { OperationVariables } from "apollo-client";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "auto",
-      overflowX: "scroll"
+      display: "flex",
+      padding: theme.spacing(2),
+      flexDirection: "column",
+      overflow: "auto"
     },
     table: {},
     paper: {
       width: "100%",
       marginBottom: theme.spacing(2)
-    },
-    tableWrapper: {
-      overflowX: "auto"
     },
     visuallyHidden: {
       border: 0,
@@ -40,23 +42,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const headRows: HeadRow[] = [
-  { id: "name", numeric: false, label: "Dessert (100g serving)" },
-  { id: "calories", numeric: true, label: "Calories" },
-  { id: "fat", numeric: true, label: "Fat (g)" },
-  { id: "carbs", numeric: true, label: "Carbs (g)" },
-  { id: "protein", numeric: true, label: "Protein (g)" }
-];
-
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
+  { id: "name", numeric: false, label: "Ship name" },
+  { id: "status", numeric: false, label: "Status" },
+  { id: "speed", numeric: false, label: "Current speed (km/h)" },
+  { id: "location", numeric: false, label: "Coordinates" },
+  { id: "successful_landings", numeric: false, label: "Successful landings" },
+  { id: "weight_kg", numeric: true, label: "Weight (kg)" }
 ];
 
 function EnhancedTableHead(props: EnhancedTableProps) {
@@ -77,11 +68,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           >
             <TableSortLabel active={orderBy === row.id} direction={order} onClick={createSortHandler(row.id)}>
               {row.label}
-              {orderBy === row.id ? (
+              {orderBy === row.id && (
                 <span className={classes.visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
-              ) : null}
+              )}
             </TableSortLabel>
           </TableCell>
         ))}
@@ -90,12 +81,18 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-const DataTable = () => {
+const DataTable = (props: QueryHookResult<ShipsData, OperationVariables>) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<string>("calories");
+  const [orderBy, setOrderBy] = React.useState<string>("name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { data, loading } = props;
+
+  if (loading || data === undefined) {
+    return <Paper>Loading...</Paper>;
+  }
+  const rows: Array<shipType> = data.ships; //Typescript need the confirmation
 
   function handleChangePage(event: unknown, newPage: number) {
     setPage(newPage);
@@ -116,35 +113,36 @@ const DataTable = () => {
 
   return (
     <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
-          <EnhancedTableHead classes={classes} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-          <TableBody>
-            {stableSort(rows, getSorting(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                    <TableCell component="th" id={labelId} scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                );
-              })}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 49 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+      <Table className={classes.table}>
+        <EnhancedTableHead classes={classes} order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+        <TableBody>
+          {stableSort<shipType>(rows, getSorting(order, orderBy))
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row, index) => {
+              return (
+                <TableRow hover tabIndex={-1} key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell padding="checkbox" align="left">
+                    {row.status || "unknown"}
+                  </TableCell>
+                  <TableCell align="left">{(row.speed_kn * 1.852).toFixed(2)}</TableCell>
+                  <TableCell align="left">
+                    {row.position.latitude ? `${row.position.latitude},${row.position.longitude}` : "unknown"}
+                  </TableCell>
+                  <TableCell align="left">{`${row.successful_landings || 0}/${row.attempted_landings || 0}`}</TableCell>
+                  <TableCell align="center">{row.weight_kg || "unknown"}</TableCell>
+                </TableRow>
+              );
+            })}
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 49 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"

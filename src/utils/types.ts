@@ -33,10 +33,39 @@ export type launchType = {
   upcoming: boolean;
 };
 
+export type shipLocationType = {
+  latitude: number;
+  longitude: number;
+};
+
+export type shipMissionType = {
+  flight: string;
+  name: string;
+};
+
+export type shipType = {
+  id: string;
+  active: boolean;
+  position: shipLocationType;
+  missions: shipMissionType;
+  status: string;
+  attempted_landings?: number;
+  successful_landings?: number;
+  weight_kg: number;
+  speed_kn: number;
+  name: string;
+  image: string;
+  year_built: number;
+};
+
 /////////// APOLLO TYPES ////////
 
 export interface LaunchNextData {
   launchNext: launchType;
+}
+
+export interface ShipsData {
+  ships: Array<shipType>;
 }
 
 export interface LaunchLatestData {

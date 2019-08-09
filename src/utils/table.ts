@@ -13,7 +13,7 @@ export function stableSort<T>(array: T[], cmp: (a: T, b: T) => number) {
 export function getSorting<K extends keyof any>(
   order: Order,
   orderBy: K
-): (a: { [key in K]: number | string }, b: { [key in K]: number | string }) => number {
+): (a: { [key in K]: any }, b: { [key in K]: any }) => number {
   return order === "desc" ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
