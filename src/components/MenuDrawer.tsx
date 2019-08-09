@@ -16,6 +16,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import BoatIcon from "@material-ui/icons/DirectionsBoat";
 import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
+import { Link, LinkProps } from "react-router-dom";
 import githubLogo from "../github.svg";
 
 const drawerWidth = 240;
@@ -57,6 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const AdapterLink = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
+  <Link innerRef={ref as any} {...props} />
+));
+
 const MenuDrawer = (props: { children: ReactNode }) => {
   const classes = useStyles(props);
   const theme = useTheme();
@@ -71,7 +76,7 @@ const MenuDrawer = (props: { children: ReactNode }) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button component={AdapterLink} to="/">
           <ListItemIcon>
             <TimerIcon />
           </ListItemIcon>
@@ -80,13 +85,13 @@ const MenuDrawer = (props: { children: ReactNode }) => {
       </List>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button component={AdapterLink} to="/launches">
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary="Launches" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={AdapterLink} to="/ships">
           <ListItemIcon>
             <BoatIcon />
           </ListItemIcon>

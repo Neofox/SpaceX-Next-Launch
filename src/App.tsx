@@ -7,6 +7,7 @@ import EventSnackbar from "./components/EventSnackbar";
 import Dashboard from "./components/Dashboard";
 import { ApolloProvider } from "react-apollo-hooks";
 import MenuDrawer from "./components/MenuDrawer";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const App: React.FC = () => {
   return (
@@ -14,9 +15,13 @@ const App: React.FC = () => {
       <ApolloProvider client={client}>
         <CssBaseline />
         <main>
-          <MenuDrawer>
-            <Dashboard />
-          </MenuDrawer>
+          <Router>
+            <MenuDrawer>
+              <Route exact path="/" render={() => <Dashboard />} />
+              <Route exact path="/launches" render={() => <h1>Launches</h1>} />
+              <Route exact path="/ships" render={() => <h1>Ships</h1>} />
+            </MenuDrawer>
+          </Router>
           <EventSnackbar />
         </main>
       </ApolloProvider>
