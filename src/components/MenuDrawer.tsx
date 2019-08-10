@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth
     },
     content: {
-      height: "100vh",
       overflowX: "auto",
       flexGrow: 1,
       padding: theme.spacing(3, 0, 0, 0)
@@ -99,7 +98,7 @@ const MenuDrawer = (props: { children: ReactNode }) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" elevation={10} className={classes.appBar}>
+      <AppBar position="fixed" elevation={6} className={classes.appBar}>
         <Toolbar variant="regular">
           <IconButton
             color="inherit"
