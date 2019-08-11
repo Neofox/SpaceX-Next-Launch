@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import gql from "graphql-tag";
 import { useQuery } from "react-apollo-hooks";
 import { ShipsData } from "../utils/types";
+import MapPanel from "./MapPanel";
+import { LatLngLiteral } from "leaflet";
 
 //TODO move graphql request in their own file
 const SHIPS = gql`
@@ -16,10 +18,6 @@ const SHIPS = gql`
       status
       attempted_landings
       name
-      position {
-        latitude
-        longitude
-      }
       id
       image
       successful_landings
@@ -29,17 +27,48 @@ const SHIPS = gql`
   }
 `;
 
+const SHIPS_POSITIONS = gql`
+  query getShipsPositions {
+    ships {
+      position {
+        latitude
+        longitude
+      }
+      id
+      name
+    }
+  }
+`;
+
 const Ships = () => {
   const queryRes = useQuery<ShipsData>(SHIPS);
+  const queryPosRes = useQuery<ShipsData>(SHIPS_POSITIONS);
+
+  let positions: Array<LatLngLiteral> = [];
+  let additionalData: Array<{ name: string; id: string }> = [];
+  if (queryPosRes.data !== undefined) {
+    positions = queryPosRes.data.ships
+      .filter(({ position }) => position.latitude !== null)
+      .map(({ position }) => ({ lat: position.latitude, lng: position.longitude }));
+    additionalData = queryPosRes.data.ships
+      .filter(({ position }) => position.latitude !== null)
+      .map(({ name, id }) => ({ name, id }));
+  }
 
   return (
     <Container>
-      <Grid container spacing={3}>
+      <Grid container>
         <Grid item md={12} lg={12} xs={12}>
           <Typography variant="h6" gutterBottom style={{ padding: "0px 0px 16px" }}>
             Ships information
           </Typography>
           <Datatable {...queryRes} />
+        </Grid>
+        <Grid item md={12} lg={12} xs={12}>
+          <Typography variant="h6" gutterBottom style={{ padding: "24px 0px 16px" }}>
+            Ships location
+          </Typography>
+          <MapPanel positions={positions} data={additionalData} />
         </Grid>
       </Grid>
     </Container>

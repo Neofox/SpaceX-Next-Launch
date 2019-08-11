@@ -44,7 +44,6 @@ const headRows: HeadRow[] = [
   { id: "name", numeric: false, label: "Ship name" },
   { id: "status", numeric: false, label: "Status" },
   { id: "speed", numeric: false, label: "Current speed (km/h)" },
-  { id: "location", numeric: false, label: "Coordinates" },
   { id: "successful_landings", numeric: false, label: "Successful landings" },
   { id: "weight_kg", numeric: true, label: "Weight (kg)" }
 ];
@@ -82,7 +81,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 const DataTable = (props: QueryHookResult<ShipsData, OperationVariables>) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState<Order>("asc");
+  const [order, setOrder] = React.useState<Order>("desc");
   const [orderBy, setOrderBy] = React.useState<string>("name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -117,7 +116,7 @@ const DataTable = (props: QueryHookResult<ShipsData, OperationVariables>) => {
         <TableBody>
           {stableSort<shipType>(rows, getSorting(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => {
+            .map(row => {
               return (
                 <TableRow hover tabIndex={-1} key={row.id}>
                   <TableCell component="th" scope="row">
@@ -127,9 +126,6 @@ const DataTable = (props: QueryHookResult<ShipsData, OperationVariables>) => {
                     {row.status || "unknown"}
                   </TableCell>
                   <TableCell align="left">{(row.speed_kn * 1.852).toFixed(2)}</TableCell>
-                  <TableCell align="left">
-                    {row.position.latitude ? `${row.position.latitude},${row.position.longitude}` : "unknown"}
-                  </TableCell>
                   <TableCell align="left">{`${row.successful_landings || 0}/${row.attempted_landings || 0}`}</TableCell>
                   <TableCell align="center">{row.weight_kg || "unknown"}</TableCell>
                 </TableRow>
