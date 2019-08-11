@@ -90,7 +90,7 @@ const DataTable = (props: QueryHookResult<ShipsData, OperationVariables>) => {
   if (loading || data === undefined) {
     return <Paper>Loading...</Paper>;
   }
-  const rows: Array<shipType> = data.ships; //Typescript need the confirmation
+  const rows: Array<shipType> = data.ships;
 
   function handleChangePage(event: unknown, newPage: number) {
     setPage(newPage);

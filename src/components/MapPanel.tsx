@@ -25,7 +25,7 @@ const MapPanel = ({ positions, data }: MapInterface) => {
 
   return (
     <Paper elevation={10} className={classes.root}>
-      <Map center={[51.505, -0.09]} zoom={1} className={classes.map}>
+      <Map center={[38.625, -90.187]} zoom={1} className={classes.map}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
